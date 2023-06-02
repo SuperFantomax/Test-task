@@ -14,12 +14,12 @@ def calculate_file_hash(file_path):
         return file_hash
     
 def file_hashes(directory):
-    file_hashes = {}
+    file_hashes = set()
     for root, dirs, files in os.walk(directory):
         for file in files:
             file_path = os.path.join(root, file)
-            file_hash = calculate_file_hash(file_path)
-            file_hashes[file_path] = file_hash
+            relative_path = os.path.relpath(file_path, directory)
+            file_hashes.add(relative_path)
     return file_hashes
 
 print(file_hashes(source_path))
