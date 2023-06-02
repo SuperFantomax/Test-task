@@ -20,6 +20,10 @@ def file_hashes(directory):
             file_path = os.path.join(root, file)
             relative_path = os.path.relpath(file_path, directory)
             file_hashes.add(relative_path)
+        for dir in dirs:
+            dir_path = os.path.join(root, dir)
+            relative_path = os.path.relpath(dir_path)
+            file_hashes.add(relative_path)
     return file_hashes
 
 print(file_hashes(source_path))
