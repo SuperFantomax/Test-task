@@ -1,10 +1,10 @@
-if __name__ == "__main__":
+import os
+import hashlib
+import logging
+import argparse
+import time
 
-    import os
-    import hashlib
-    import logging
-    import argparse
-    import time
+if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Synchronization of 2 folders')  
     parser.add_argument('source_path', type=str, help='enter address of your source folder')
@@ -19,7 +19,6 @@ if __name__ == "__main__":
     time_interval = args.time_interval
 
     logging.basicConfig(filename=log_path, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 
     def file_set(directory):
         file_set = set()
