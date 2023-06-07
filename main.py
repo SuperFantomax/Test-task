@@ -43,29 +43,6 @@ def calculate_subtree_md5(directory):
             md5.update(file_md5.encode())
     return md5.hexdigest()
 
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Synchronization of 2 folders')
-    parser.add_argument('source_path', type=str, help='enter address of your source folder')
-    parser.add_argument('replica_path', type=str, help='enter address of your replica folder')
-    parser.add_argument('log_path', type=str, help='enter address of your log file')
-    parser.add_argument('time_interval', type=float, help='enter interval for syncronization')
-    args = parser.parse_args()
-
-    source_path = args.source_path
-    replica_path = args.replica_path
-    log_path = args.log_path
-    time_interval = args.time_interval
-
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    file_handler = logging.FileHandler(log_path)
-    stream_handler = logging.StreamHandler()
-
-    root_logger = logging.getLogger()
-    root_logger.addHandler(file_handler)
-    root_logger.addHandler(stream_handler)
-
-
 def sync():
     source_set = file_set(source_path)
     replica_set = file_set(replica_path)
@@ -122,6 +99,26 @@ def sync():
     else:
         logging.info("No synchronization needed. Source and replica are already synchronized.")
 
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Synchronization of 2 folders')
+    parser.add_argument('source_path', type=str, help='enter address of your source folder')
+    parser.add_argument('replica_path', type=str, help='enter address of your replica folder')
+    parser.add_argument('log_path', type=str, help='enter address of your log file')
+    parser.add_argument('time_interval', type=float, help='enter interval for syncronization')
+    args = parser.parse_args()
+
+    source_path = args.source_path
+    replica_path = args.replica_path
+    log_path = args.log_path
+    time_interval = args.time_interval
+
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    file_handler = logging.FileHandler(log_path)
+    stream_handler = logging.StreamHandler()
+
+    root_logger = logging.getLogger()
+    root_logger.addHandler(file_handler)
+    root_logger.addHandler(stream_handler)
 
 while True:
     sync()
