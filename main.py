@@ -45,16 +45,11 @@ def calculate_subtree_md5(directory):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description='Synchronization of 2 folders')
-    parser.add_argument('source_path', type=str,
-                        help='enter address of your source folder')
-    parser.add_argument('replica_path', type=str,
-                        help='enter address of your replica folder')
-    parser.add_argument('log_path', type=str,
-                        help='enter address of your log file')
-    parser.add_argument('time_interval', type=float,
-                        help='enter interval for syncronization')
+    parser = argparse.ArgumentParser(description='Synchronization of 2 folders')
+    parser.add_argument('source_path', type=str, help='enter address of your source folder')
+    parser.add_argument('replica_path', type=str, help='enter address of your replica folder')
+    parser.add_argument('log_path', type=str, help='enter address of your log file')
+    parser.add_argument('time_interval', type=float, help='enter interval for syncronization')
     args = parser.parse_args()
 
     source_path = args.source_path
@@ -62,8 +57,7 @@ if __name__ == "__main__":
     log_path = args.log_path
     time_interval = args.time_interval
 
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     file_handler = logging.FileHandler(log_path)
     stream_handler = logging.StreamHandler()
 
@@ -126,8 +120,7 @@ def sync():
         logging.info("Synchronization completed.")
 
     else:
-        logging.info(
-            "No synchronization needed. Source and replica are already synchronized.")
+        logging.info("No synchronization needed. Source and replica are already synchronized.")
 
 
 while True:
