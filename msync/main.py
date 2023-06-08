@@ -120,6 +120,6 @@ if __name__ == "__main__":
     root_logger.addHandler(file_handler)
     root_logger.addHandler(stream_handler)
 
-while True:
-    sync()
-    time.sleep(time_interval)
+    while True:
+        sync()
+        time.sleep(time_interval)
