@@ -32,18 +32,7 @@ def calculate_md5(path):
 
     return md5.hexdigest()
 
-
-def calculate_subtree_md5(directory):
-    md5 = hashlib.md5()
-
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_md5 = calculate_md5(file_path)
-            md5.update(file_md5.encode())
-    return md5.hexdigest()
-
-def sync():
+def sync(source_path, replica_path):
     source_set = file_set(source_path)
     replica_set = file_set(replica_path)
 
@@ -54,8 +43,8 @@ def sync():
     create_set = source_set.difference(replica_set)
     samedata_set = replica_set.intersection(source_set)
 
-    if len(delete_set) or len(create_set) != 0 or (len(samedata_set) > 0 and source_hash != replica_hash):
-        logging.info("Synchronization needed.")
+    if len(delete_set) or len(create_set) != 0 or len(samedata_set) > 0:
+        logging.info("Synchronization start.")
 
         for item in delete_set:
             item_path = os.path.join(replica_path, item)
@@ -82,8 +71,7 @@ def sync():
                     f'Directory {item} from {source_path} was added to the {replica_path}.')
 
         for item in samedata_set:
-            if os.path.isfile:
-                if calculate_md5(source_path + '/' + item) != calculate_md5(replica_path + '/' + item):
+            if os.path.isfile and calculate_md5(source_path + '/' + item) != calculate_md5(replica_path + '/' + item):
                     rpl_path = os.path.join(replica_path, item)
                     src_path = os.path.join(source_path, item)
                     if os.path.isfile(rpl_path):
@@ -93,6 +81,10 @@ def sync():
                             rpl_file.write(content)
                         logging.info(
                             f'File {item} from {replica_path} has been replaced with file from {source_path}')
+
+        else:
+                logging.info('No synchronization needed. Source and replica are already synchronized.')
+                break
 
         logging.info("Synchronization completed.")
 
@@ -121,5 +113,5 @@ if __name__ == "__main__":
     root_logger.addHandler(stream_handler)
 
     while True:
-        sync()
+        sync(source_path, replica_path)
         time.sleep(time_interval)
