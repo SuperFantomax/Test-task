@@ -68,11 +68,10 @@ def sync(source_path, replica_path):
                     f'Directory {item} from {source_path} was added to the {replica_path}.')
 
         for item in samedata_set:
-            if os.path.isfile and calculate_md5(source_path + '/' + item) != calculate_md5(replica_path + '/' + item):
-                    rpl_path = os.path.join(replica_path, item)
-                    src_path = os.path.join(source_path, item)
+            rpl_path = os.path.join(replica_path, item)
+            src_path = os.path.join(source_path, item)
+            if os.path.isfile and calculate_md5(src_path) != calculate_md5(rpl_path):
                     if os.path.isfile(rpl_path):
-                        os.remove(rpl_path)
                         with open(src_path, 'rb') as src_file, open(rpl_path, 'wb') as rpl_file:
                             content = src_file.read()
                             rpl_file.write(content)
