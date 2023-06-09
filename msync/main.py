@@ -36,9 +36,6 @@ def sync(source_path, replica_path):
     source_set = file_set(source_path)
     replica_set = file_set(replica_path)
 
-    source_hash = calculate_subtree_md5(source_path)
-    replica_hash = calculate_subtree_md5(replica_path)
-
     delete_set = replica_set.difference(source_set)
     create_set = source_set.difference(replica_set)
     samedata_set = replica_set.intersection(source_set)
