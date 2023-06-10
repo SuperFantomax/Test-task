@@ -26,8 +26,6 @@ def calculate_md5(path):
         md5.update(data)
     return md5.hexdigest()
 
-    return md5.hexdigest()
-
 def sync(source_path, replica_path):
     source_set = file_set(source_path)
     replica_set = file_set(replica_path)
