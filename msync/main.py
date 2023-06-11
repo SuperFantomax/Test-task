@@ -26,6 +26,9 @@ def calculate_md5(path):
     return md5.hexdigest()
 
 def sync(source_path, replica_path):
+    if not os.path.exists(replica_path):
+        os.makedirs(replica_path)
+        logging.info(f'Replica folder {replica_path} created.')
     source_set = file_set(source_path)
     replica_set = file_set(replica_path)
     
