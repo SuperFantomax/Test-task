@@ -26,16 +26,9 @@ def calculate_md5(path):
     return md5.hexdigest()
 
 def sync(source_path, replica_path):
-    if not os.path.exists(source_path):
-        raise FileNotFoundError(f"Source folder '{source_path}' does not exist.")
-    if not os.path.isdir(source_path):
-        raise NotADirectoryError(f'Source path {source_path} is not a directory.')
-    if not os.path.exists(replica_path):
-        os.makedirs(replica_path)
-        logging.info(f'Replica folder {replica_path} created.')
+    
     source_set = file_set(source_path)
     replica_set = file_set(replica_path)
-    
     delete_set = replica_set.difference(source_set)
     create_set = source_set.difference(replica_set)
     samedata_set = replica_set.intersection(source_set)
@@ -100,6 +93,14 @@ if __name__ == "__main__":
     root_logger = logging.getLogger()
     root_logger.addHandler(file_handler)
     root_logger.addHandler(stream_handler)
+    
+    if not os.path.exists(source_path):
+        raise FileNotFoundError(f"Source folder '{source_path}' does not exist.")
+    if not os.path.isdir(source_path):
+        raise NotADirectoryError(f'Source path {source_path} is not a directory.')
+    if not os.path.exists(replica_path):
+        os.makedirs(replica_path)
+        logging.info(f'Replica folder {replica_path} created.')
 
     while True:
         sync(source_path, replica_path)
